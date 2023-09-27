@@ -3,9 +3,9 @@ import {
   ReactChildren,
   ReactElement,
   useMemo,
-} from 'react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { clusterApiUrl } from '@solana/web3.js';
+} from 'react'
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
+import { clusterApiUrl } from '@solana/web3.js'
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -14,28 +14,27 @@ import {
   SolletExtensionWalletAdapter,
   SolletWalletAdapter,
   TorusWalletAdapter,
-} from '@solana/wallet-adapter-wallets';
+} from '@solana/wallet-adapter-wallets'
 import {
   ConnectionProvider,
   useWallet,
   WalletProvider,
-} from '@solana/wallet-adapter-react';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-require(`@solana/wallet-adapter-react-ui/styles.css`);
+} from '@solana/wallet-adapter-react'
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
+require(`@solana/wallet-adapter-react-ui/styles.css`)
+import { customized_rpc } from '../utils/const'
 
 export const SolanaWalletProvider = ({
   children,
 }: {
-  children: ReactElement<
-    ReactChildren,
-    string | JSXElementConstructor<unknown>
-  >;
+  children: ReactElement<ReactChildren, string | JSXElementConstructor<unknown>>
 }) => {
   const network =
     process.env.REACT_APP_CLUSTER === `mainnet`
       ? WalletAdapterNetwork.Mainnet
-      : WalletAdapterNetwork.Devnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+      : WalletAdapterNetwork.Devnet
+  // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const endpoint = customized_rpc
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
@@ -47,7 +46,7 @@ export const SolanaWalletProvider = ({
       new SolletExtensionWalletAdapter({ network }),
     ],
     [network],
-  );
+  )
 
   return (
     <ConnectionProvider endpoint={endpoint}>
@@ -55,7 +54,7 @@ export const SolanaWalletProvider = ({
         <WalletModalProvider>{children}</WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
-  );
-};
+  )
+}
 
-export const useSolanaWallet = useWallet;
+export const useSolanaWallet = useWallet

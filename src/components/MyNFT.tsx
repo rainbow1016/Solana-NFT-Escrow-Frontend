@@ -6,10 +6,11 @@ import { Connection, clusterApiUrl } from '@solana/web3.js'
 
 import Moralis from 'moralis'
 import { SolNetwork } from '@moralisweb3/common-sol-utils'
+import { customized_rpc } from '../utils/const'
 
 export const MyNFT = () => {
   const { connection } = useConnection()
-  const new_connection = new Connection('https://rpc.theindex.io', 'finalized')
+  const new_connection = new Connection(customized_rpc)
   const [metadataList, fetchMetadata] = useMetadata()
   console.log(useWallet())
   const publicKey = useWallet().publicKey
@@ -68,3 +69,31 @@ export const MyNFT = () => {
     </div>
   )
 }
+
+// NFT metadata sample
+// {
+//   "key": 4,
+//   "updateAuthority": "6r6mprTMdaY1yJKryCV8N4khY5KGxbbRGU93p8PzEsrB",
+//   "mint": "62h5mBheZCffjvQk4FvfV6nYDYjvLE4QK9G8ZoZRcVj3",
+//   "data": {
+//       "name": "Bot Labs #193",
+//       "symbol": "BOTLABS",
+//       "uri": "https://arweave.net/3r9H00KCNzKlg1Gzl_3JjnGOELQnyjXE6QjLdVUBCP0",
+//       "sellerFeeBasisPoints": 0,
+//       "creators": [
+//           {
+//               "address": "7MhpkuQBHLnL6k1yApymnCLLdWs7kS6yuDhVTohfa2Zq",
+//               "verified": 1,
+//               "share": 0
+//           },
+//           {
+//               "address": "6r6mprTMdaY1yJKryCV8N4khY5KGxbbRGU93p8PzEsrB",
+//               "verified": 0,
+//               "share": 100
+//           }
+//       ]
+//   },
+//   "primarySaleHappened": 1,
+//   "isMutable": 1,
+//   "editionNonce": null
+// }

@@ -16,6 +16,7 @@ import {
   WalletMultiButton,
 } from '@solana/wallet-adapter-react-ui'
 import { clusterApiUrl } from '@solana/web3.js'
+import { customized_rpc } from '../utils/const'
 
 require('@solana/wallet-adapter-react-ui/styles.css')
 
@@ -25,7 +26,9 @@ interface Props {
 
 const WalletConnectionProvider: FC<Props> = ({ children }) => {
   const network = WalletAdapterNetwork.Mainnet
-  const endpoint = useMemo(() => clusterApiUrl(network), [network])
+  // const endpoint = useMemo(() => clusterApiUrl(network), [network])
+  const endpoint = customized_rpc
+  console.log('endpoint is ', endpoint)
 
   const wallets = useMemo(
     () => [

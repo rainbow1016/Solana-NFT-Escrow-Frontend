@@ -90,3 +90,5 @@ export const getTokenBalance = async (
 
 export const pubkeyToString = (key: PublicKey | null | string = ``) =>
   typeof key === `string` ? key : key?.toBase58() || ``;
+
+export const customized_rpc = 'https://special-sleek-general.solana-mainnet.discover.quiknode.pro/aaaec0f7c0ca572643d62a44743a21fb434df7d1/'
