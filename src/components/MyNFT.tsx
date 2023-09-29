@@ -8,7 +8,7 @@ import Moralis from 'moralis'
 import { SolNetwork } from '@moralisweb3/common-sol-utils'
 import { customized_rpc } from '../utils/const'
 
-export const MyNFT = () => {
+export const MyNFT = ({ callback }) => {
   const { connection } = useConnection()
   const new_connection = new Connection(customized_rpc)
   const [metadataList, fetchMetadata] = useMetadata()
@@ -22,7 +22,7 @@ export const MyNFT = () => {
       console.log('here is my public key 12', publicKey.toBase58())
       fetchMetadata({
         connection: new_connection,
-        ownerAddress: publicKey.toBase58().toString(),
+        ownerAddress: publicKey.toBase58().toString()
       })
       console.log('--------------', metadataList)
     }
@@ -56,11 +56,13 @@ export const MyNFT = () => {
           {metadataList.map(metadata => {
             return (
               metadata && (
-                <NFTCard
-                  key={metadata.mint}
-                  metadata={metadata}
-                  sellerAddress={publicKey?.toBase58() || ''}
-                />
+                <div onClick={() => callback(metadata)}>
+                  <NFTCard
+                    key={metadata.mint}
+                    metadata={metadata}
+                    sellerAddress={publicKey?.toBase58() || ''}
+                  />
+                </div>
               )
             )
           })}

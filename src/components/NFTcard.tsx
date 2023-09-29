@@ -43,9 +43,11 @@ export const NFTCard = ({ metadata, sellerAddress }: NFTCardProps) => {
           </div>
           <div className='pt-1 pl-2 flex justify-between justify-center'>
             <div>
-              <h3 className='text-sm text-gray-700'>{metadata?.data.name}</h3>
+              <h3 className='text-sm text-gray-700'>
+                {metadata?.data.name != '' ? metadata?.data.name : '_'}
+              </h3>
               <p className='mt-1 text-sm text-gray-500'>
-                {metadata?.data.symbol}
+                {metadata?.data.symbol != '' ? metadata?.data.symbol : '_'}
               </p>
               <a
                 target='_blank'

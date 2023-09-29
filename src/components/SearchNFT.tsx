@@ -6,7 +6,7 @@ import { NFTCard } from './NFTcard'
 import { Connection } from '@solana/web3.js'
 import { customized_rpc } from '../utils/const'
 
-export const SearchNFT = () => {
+export const SearchNFT = ({ callback }) => {
   // const { connection } = useConnection()
   const connection = new Connection(customized_rpc)
   const [metadataList, fetchMetadata] = useMetadata()
@@ -18,13 +18,13 @@ export const SearchNFT = () => {
     if (searchState) {
       fetchMetadata({
         connection,
-        ownerAddress: searchState,
+        ownerAddress: searchState
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const handleChangeSellerAddress = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setSellerAddress(e.target.value ? e.target.value.toString() : '')
   }
@@ -34,12 +34,12 @@ export const SearchNFT = () => {
   }
 
   const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
     await fetchMetadata({
       connection,
-      ownerAddress: sellerAddress,
+      ownerAddress: sellerAddress
     })
     searchDispatch(sellerAddress)
   }
@@ -87,11 +87,13 @@ export const SearchNFT = () => {
           {metadataList.map(metadata => {
             return (
               metadata && (
-                <NFTCard
-                  key={metadata.mint}
-                  metadata={metadata}
-                  sellerAddress={sellerAddress}
-                />
+                <div onClick={() => callback(metadata)}>
+                  <NFTCard
+                    key={metadata.mint}
+                    metadata={metadata}
+                    sellerAddress={sellerAddress}
+                  />
+                </div>
               )
             )
           })}

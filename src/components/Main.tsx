@@ -16,10 +16,13 @@ import { SellerTab } from './SellerTab'
 
 const colors = {
   active: 'text-purple-50 bg-purple-500',
-  inactive: 'text-gray-500 bg-gray-100',
+  inactive: 'text-gray-500 bg-gray-100'
 }
-
-export const Main = () => {
+interface IProps {
+  setFirstOfDeal: (a: any) => any
+  setSecondOfDeal: (a: any) => any
+}
+export const Main = ({ setFirstOfDeal, setSecondOfDeal }: IProps) => {
   const { connection } = useConnection()
   const { publicKey, signTransaction } = useWallet()
   const loadingDispatch = useLoadingDispatch()
@@ -123,8 +126,8 @@ export const Main = () => {
 
   return (
     <div>
-      <MyNFT />
-      <SearchNFT />
+      <MyNFT callback={setFirstOfDeal} />
+      <SearchNFT callback={setSecondOfDeal} />
       {/* <div className='mt-6 sm:mt-6'>
         <div className='p-4 sm:px-0 sm:py-3'>
           <h3 className='text-lg font-medium  text-gray-900'>Transactions</h3>
