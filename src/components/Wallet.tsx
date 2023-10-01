@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import {
   ConnectionProvider,
-  WalletProvider,
+  WalletProvider
 } from '@solana/wallet-adapter-react'
 import { WalletAdapterNetwork, WalletError } from '@solana/wallet-adapter-base'
 import {
@@ -9,11 +9,11 @@ import {
   PhantomWalletAdapter,
   SlopeWalletAdapter,
   SolflareWalletAdapter,
-  TorusWalletAdapter,
+  TorusWalletAdapter
 } from '@solana/wallet-adapter-wallets'
 import {
   WalletModalProvider,
-  WalletMultiButton,
+  WalletMultiButton
 } from '@solana/wallet-adapter-react-ui'
 import { clusterApiUrl } from '@solana/web3.js'
 import { customized_rpc } from '../utils/const'
@@ -25,20 +25,20 @@ interface Props {
 }
 
 const WalletConnectionProvider: FC<Props> = ({ children }) => {
-  const network = WalletAdapterNetwork.Mainnet
+  const network = WalletAdapterNetwork.Devnet
   // const endpoint = useMemo(() => clusterApiUrl(network), [network])
   const endpoint = customized_rpc
   console.log('endpoint is ', endpoint)
 
   const wallets = useMemo(
     () => [
-      new PhantomWalletAdapter(),
+      new PhantomWalletAdapter({ network }),
       new GlowWalletAdapter(),
       new SlopeWalletAdapter(),
       new SolflareWalletAdapter({ network }),
-      new TorusWalletAdapter(),
+      new TorusWalletAdapter()
     ],
-    [network],
+    [network]
   )
 
   return (

@@ -38,7 +38,12 @@ const Index: NextPage = () => {
       </div>
       {/* <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'> */}
       <div>
-        <DealWindow firstOfDeal={firstOfDeal} secondOfDeal={secondOfDeal} />
+        <DealWindow
+          firstOfDeal={firstOfDeal}
+          setFirstOfDeal={setFirstOfDeal}
+          secondOfDeal={secondOfDeal}
+          setSecondOfDeal={setSecondOfDeal}
+        />
       </div>
     </Layout>
     // <div>aosiejfoaewjf</div>

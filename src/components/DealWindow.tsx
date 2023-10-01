@@ -17,8 +17,15 @@ const colors = {
 interface IProps {
   firstOfDeal: object
   secondOfDeal: object
+  setFirstOfDeal: (a: any) => any
+  setSecondOfDeal: (a: any) => any
 }
-export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
+export const DealWindow = ({
+  setFirstOfDeal,
+  setSecondOfDeal,
+  firstOfDeal,
+  secondOfDeal
+}: IProps) => {
   const { connection } = useConnection()
   const { publicKey, signTransaction } = useWallet()
   const loadingDispatch = useLoadingDispatch()
@@ -26,11 +33,11 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
   const [isHiddenOffer, setIsHiddenOffer] = useState(false)
   const [isHiddenRequest, setIsHiddenRequest] = useState(false)
   const [valueOffer, setValueOffer] = useState<String>('')
-  const [valueRequest, setValueRequest] = useState<Number>()
+  const [valueRequest, setValueRequest] = useState<String>('')
   const [isDisabledOffer, setIsDisabledOffer] = useState(false)
   const [isDisabledRequest, setIsDisabledRequest] = useState(false)
   const [isDisabledConfirm, setIsDisabledConfirm] = useState(false)
-  console.log(1, valueOffer)
+  // console.log(1, valueOffer)
   const clickOfferSol = async () => {
     setIsHiddenOffer(true)
     setIsDisabledRequest(true)
@@ -42,7 +49,10 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
     console.log(2, valueOffer)
   }
   const handleChangeOffer = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueOffer(e.target.value)
+    const re = /^\d+(\.\d+)?$/
+    if (e.target.value === '' || re.test(e.target.value)) {
+      setValueOffer(e.target.value)
+    }
   }
   const clickRequestSol = async () => {
     setIsHiddenRequest(true)
@@ -51,11 +61,14 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
   const clickRequestSolInput = async () => {
     setIsHiddenRequest(false)
     setIsDisabledOffer(false)
-    setValueRequest(undefined)
-    console.log(valueRequest)
+    setValueRequest('')
+    console.log(3, valueRequest)
   }
   const handleChangeRequest = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueRequest(Number(e.target.value))
+    const re = /^\d+(\.\d+)?$/
+    if (e.target.value === '' || re.test(e.target.value)) {
+      setValueRequest(e.target.value)
+    }
   }
 
   // const metadataList = [
@@ -132,11 +145,13 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
       )} */}
       <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
         {firstOfDeal && firstOfDeal.mint && (
-          <NFTCard
-            key={firstOfDeal.mint}
-            metadata={firstOfDeal}
-            sellerAddress={publicKey?.toBase58() || ''}
-          />
+          <div onClick={() => setFirstOfDeal({ key: 0 })}>
+            <NFTCard
+              key={firstOfDeal.mint}
+              metadata={firstOfDeal}
+              sellerAddress={publicKey?.toBase58() || ''}
+            />
+          </div>
         )}
         <button
           className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
@@ -147,7 +162,7 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
           Offer SOL
         </button>
         <input
-          // type='number'
+          type='number'
           className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
           id='offer_sol'
           placeholder='SOL'
@@ -166,11 +181,13 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
       </div>
       <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
         {secondOfDeal && secondOfDeal.mint && (
-          <NFTCard
-            key={secondOfDeal.mint}
-            metadata={secondOfDeal}
-            sellerAddress={publicKey?.toBase58() || ''}
-          />
+          <div onClick={() => setSecondOfDeal({ key: 0 })}>
+            <NFTCard
+              key={secondOfDeal.mint}
+              metadata={secondOfDeal}
+              sellerAddress={publicKey?.toBase58() || ''}
+            />
+          </div>
         )}
         <button
           className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
@@ -199,9 +216,21 @@ export const DealWindow = ({ firstOfDeal, secondOfDeal }: IProps) => {
       </div>
       <button
         className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-4 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8 text-2xl w-1/2 disabled:opacity-50'
-        disabled={isDisabledConfirm}
+        disabled={
+          !(
+            firstOfDeal &&
+            firstOfDeal.mint &&
+            secondOfDeal &&
+            secondOfDeal.mint
+          )
+        }
         onClick={() => {
-          console.log(firstOfDeal, secondOfDeal)
+          console.log(
+            firstOfDeal,
+            secondOfDeal,
+            Number(valueOffer),
+            Number(valueRequest)
+          )
         }}
       >
         Confirm Swap

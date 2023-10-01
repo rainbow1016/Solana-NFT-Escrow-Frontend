@@ -36,6 +36,7 @@ export const SearchNFT = ({ callback }) => {
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    callback({ key: 0 })
     e.preventDefault()
     await fetchMetadata({
       connection,

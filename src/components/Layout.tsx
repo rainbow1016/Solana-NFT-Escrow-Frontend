@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast'
 
 export const Layout = ({
   children,
-  formatRpc,
+  formatRpc
 }: {
   children: React.ReactNode
   formatRpc: string

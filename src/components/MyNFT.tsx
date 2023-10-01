@@ -25,6 +25,12 @@ export const MyNFT = ({ callback }) => {
         ownerAddress: publicKey.toBase58().toString()
       })
       console.log('--------------', metadataList)
+    } else {
+      fetchMetadata({
+        connection: new_connection,
+        ownerAddress: ''
+      })
+      callback({ key: 0 })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
