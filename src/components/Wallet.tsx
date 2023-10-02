@@ -28,7 +28,7 @@ const WalletConnectionProvider: FC<Props> = ({ children }) => {
   const network = WalletAdapterNetwork.Devnet
   // const endpoint = useMemo(() => clusterApiUrl(network), [network])
   const endpoint = customized_rpc
-  console.log('endpoint is ', endpoint)
+  // console.log('endpoint is ', endpoint)
 
   const wallets = useMemo(
     () => [

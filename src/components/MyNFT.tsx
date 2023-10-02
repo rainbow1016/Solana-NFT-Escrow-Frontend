@@ -8,23 +8,23 @@ import Moralis from 'moralis'
 import { SolNetwork } from '@moralisweb3/common-sol-utils'
 import { customized_rpc } from '../utils/const'
 
-export const MyNFT = ({ callback }) => {
+export const MyNFT = ({ callback, refresh }) => {
   const { connection } = useConnection()
   const new_connection = new Connection(customized_rpc)
   const [metadataList, fetchMetadata] = useMetadata()
-  console.log(useWallet())
+  // console.log(useWallet())
   const publicKey = useWallet().publicKey
 
-  console.log('here is my public key', publicKey)
+  // console.log('here is my public key', publicKey)
 
   useEffect(() => {
     if (publicKey) {
-      console.log('here is my public key 12', publicKey.toBase58())
+      // console.log('here is my public key 12', publicKey.toBase58())
       fetchMetadata({
         connection: new_connection,
         ownerAddress: publicKey.toBase58().toString()
       })
-      console.log('--------------', metadataList)
+      // console.log('--------------', metadataList)
     } else {
       fetchMetadata({
         connection: new_connection,
@@ -34,7 +34,7 @@ export const MyNFT = ({ callback }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [publicKey])
+  }, [publicKey, refresh])
 
   const generateMessage = () => {
     if (!publicKey) {

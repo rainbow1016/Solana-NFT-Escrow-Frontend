@@ -94,4 +94,5 @@ export const pubkeyToString = (key: PublicKey | null | string = ``) =>
 // export const customized_rpc =
 //   "https://special-sleek-general.solana-mainnet.discover.quiknode.pro/aaaec0f7c0ca572643d62a44743a21fb434df7d1/";
 
-export const customized_rpc = "https://https://api.devnet.solana.com";
+export const customized_rpc =
+  "https://rough-neat-research.solana-devnet.discover.quiknode.pro/67ffb9949cc02e1656eb0761af5b5cd150e7f049/";

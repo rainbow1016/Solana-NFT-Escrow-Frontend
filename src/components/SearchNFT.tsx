@@ -36,7 +36,8 @@ export const SearchNFT = ({ callback }) => {
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    callback({ key: 0 })
+    callback[0]({ key: 0 })
+    callback[1]({ sellerAddress })
     e.preventDefault()
     await fetchMetadata({
       connection,
@@ -88,7 +89,7 @@ export const SearchNFT = ({ callback }) => {
           {metadataList.map(metadata => {
             return (
               metadata && (
-                <div onClick={() => callback(metadata)}>
+                <div onClick={() => callback[0](metadata)}>
                   <NFTCard
                     key={metadata.mint}
                     metadata={metadata}

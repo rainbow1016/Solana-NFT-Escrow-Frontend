@@ -1,5 +1,5 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLoadingDispatch } from '../contexts/LoadingContext'
 import { ActionProps, ModalUserAction } from '../contexts/ModalContext'
@@ -8,8 +8,8 @@ import { TransactionType } from '../types'
 // import { cancelOffer } from "../web3/cancelOffer";
 // import { BuyerInput } from "./BuyerInput";
 import { BuyerTab } from './BuyerTab'
-// import { Loading } from "./dialogs/Loading";
-// import { ModalDialog } from "./dialogs/ModalDialog";
+import { Loading } from './dialogs/Loading'
+import { ModalDialog } from './dialogs/ModalDialog'
 import { MyNFT } from './MyNFT'
 import { SearchNFT } from './SearchNFT'
 import { SellerTab } from './SellerTab'
@@ -21,16 +21,27 @@ const colors = {
 interface IProps {
   setFirstOfDeal: (a: any) => any
   setSecondOfDeal: (a: any) => any
+  setTakerAddress: (a: any) => any
+  refresh: boolean
 }
-export const Main = ({ setFirstOfDeal, setSecondOfDeal }: IProps) => {
+export const Main = ({
+  setFirstOfDeal,
+  setSecondOfDeal,
+  setTakerAddress,
+  refresh
+}: IProps) => {
   const { connection } = useConnection()
   const { publicKey, signTransaction } = useWallet()
   const loadingDispatch = useLoadingDispatch()
   const [tab, setTab] = useState(TransactionType.Buyer)
+  // const [_, setRefresh] = useState(true)
+  useEffect(() => {
+    // setRefreshFunc(() => setRefresh(e => !e))
+  }, [refresh])
 
-  // const handleSwitchTab = (type: TransactionType) => () => {
-  //   setTab(type)
-  // }
+  const handleSwitchTab = (type: TransactionType) => () => {
+    setTab(type)
+  }
   // const cancelOfferAction = async ({
   //   id,
   //   escrowAccountAddressString,
@@ -126,11 +137,13 @@ export const Main = ({ setFirstOfDeal, setSecondOfDeal }: IProps) => {
 
   return (
     <div>
-      <MyNFT callback={setFirstOfDeal} />
-      <SearchNFT callback={setSecondOfDeal} />
-      {/* <div className='mt-6 sm:mt-6'>
+      <MyNFT callback={setFirstOfDeal} refresh={refresh} />
+      <SearchNFT callback={[setSecondOfDeal, setTakerAddress]} />
+      <div className='mt-6 sm:mt-6'>
         <div className='p-4 sm:px-0 sm:py-3'>
-          <h3 className='text-lg font-medium  text-gray-900'>Transactions</h3>
+          <h3 className='text-lg font-medium  text-gray-900'>
+            Trding Transactions
+          </h3>
         </div>
         <div className='px-4 sm:px-0'>
           <div className='flex justify-start items-center py-2 gap-2'>
@@ -140,9 +153,9 @@ export const Main = ({ setFirstOfDeal, setSecondOfDeal }: IProps) => {
                   ? colors['active']
                   : colors['inactive']
               }`}
-              // onClick={handleSwitchTab(TransactionType.Buyer)}
+              onClick={handleSwitchTab(TransactionType.Buyer)}
             >
-              Buy Offers
+              Trading Offers
             </button>
             <button
               className={`cursor-pointer py-2 px-4 rounded transition text-center ${
@@ -150,17 +163,17 @@ export const Main = ({ setFirstOfDeal, setSecondOfDeal }: IProps) => {
                   ? colors['active']
                   : colors['inactive']
               }`}
-              // onClick={handleSwitchTab(TransactionType.Seller)}
+              onClick={handleSwitchTab(TransactionType.Seller)}
             >
-              Sell Requests
+              Trading Requests
             </button>
           </div>
           {tab === TransactionType.Buyer && <BuyerTab />}
           {tab === TransactionType.Seller && <SellerTab />}
         </div>
-      </div> */}
-      {/* <ModalDialog onConfirm={handleConfirm} />
-      <Loading /> */}
+      </div>
+      {/* <ModalDialog onConfirm={handleConfirm} /> */}
+      <Loading />
     </div>
   )
 }

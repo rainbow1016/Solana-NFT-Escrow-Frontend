@@ -27,10 +27,10 @@ const network = () => {
 
 function HayamaApp ({ Component, pageProps }: AppProps) {
   const localAddress = process.env.NEXT_PUBLIC_LOCAL_ADDRESS
-  console.log(
-    'here is network configuration: ',
-    process.env.NEXT_PUBLIC_BUILD_ENV
-  )
+  // console.log(
+  //   'here is network configuration: ',
+  //   process.env.NEXT_PUBLIC_BUILD_ENV
+  // )
   return (
     <>
       <Seo

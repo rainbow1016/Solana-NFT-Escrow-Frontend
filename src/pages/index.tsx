@@ -9,6 +9,8 @@ import { DealWindow } from '../components/DealWindow'
 const Index: NextPage = () => {
   const [firstOfDeal, setFirstOfDeal] = useState<any>()
   const [secondOfDeal, setSecondOfDeal] = useState<any>()
+  const [takerAddress, setTakerAddress] = useState<any>()
+  const [refresh, handleRefresh] = useState<any>(true)
 
   // const [rpc, setRpc] = useState<string | null>(null)
   // const { connection } = useConnection()
@@ -32,17 +34,21 @@ const Index: NextPage = () => {
     <Layout formatRpc={'formatRpc'}>
       <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
         <Main
+          refresh={refresh}
           setFirstOfDeal={setFirstOfDeal}
           setSecondOfDeal={setSecondOfDeal}
+          setTakerAddress={setTakerAddress}
         />
       </div>
       {/* <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'> */}
       <div>
         <DealWindow
+          handleRefresh={() => handleRefresh((e: any) => !e)}
           firstOfDeal={firstOfDeal}
           setFirstOfDeal={setFirstOfDeal}
           secondOfDeal={secondOfDeal}
           setSecondOfDeal={setSecondOfDeal}
+          takerAddress={takerAddress}
         />
       </div>
     </Layout>
