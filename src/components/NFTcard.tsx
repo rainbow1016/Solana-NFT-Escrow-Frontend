@@ -41,24 +41,22 @@ export const NFTCard = ({ metadata, sellerAddress }: NFTCardProps) => {
               />
             )}
           </div>
-          <div className='pt-1 pl-2 flex justify-between justify-center'>
-            <div>
-              <h3 className='text-sm text-gray-700'>
-                {metadata?.data.name != '' ? metadata?.data.name : '_'}
+          <div className='pt-1 px-2'>
+            <h3 className='text-sm text-gray-700'>
+              {metadata?.data.name != '' ? metadata?.data.name : '_'}
+            </h3>
+            <p className='mt-1 text-sm text-gray-500'>
+              {metadata?.data.symbol != '' ? metadata?.data.symbol : '_'}
+            </p>
+            <a
+              target='_blank'
+              href={`https://solana.nftscan.com/${metadata.mint}`}
+              rel='noopener noreferrer'
+            >
+              <h3 className='font-mono font-light text-pink-500 border-x-2 border-y-2 rounded-md border-pink-500 justify-center mx-[10px] text-center'>
+                view details
               </h3>
-              <p className='mt-1 text-sm text-gray-500'>
-                {metadata?.data.symbol != '' ? metadata?.data.symbol : '_'}
-              </p>
-              <a
-                target='_blank'
-                href={`https://solana.nftscan.com/${metadata.mint}`}
-                rel='noopener noreferrer'
-              >
-                <h3 className='font-mono font-light text-pink-500 border-x-2 border-y-2 rounded-md border-pink-500 justify-center'>
-                  view details
-                </h3>
-              </a>
-            </div>
+            </a>
           </div>
         </div>
         {/* </Link> */}

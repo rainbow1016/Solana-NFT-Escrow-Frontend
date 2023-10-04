@@ -313,7 +313,7 @@ export const DealWindow = ({
           })}
         </div>
       )} */}
-      <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
+      <div className='w-full text-center container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
         {firstOfDeal && firstOfDeal.mint && (
           <div onClick={() => setFirstOfDeal({ key: 0 })}>
             <NFTCard
@@ -323,14 +323,16 @@ export const DealWindow = ({
             />
           </div>
         )}
-        <button
-          className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
-          hidden={isHiddenOffer}
-          onClick={clickOfferSol}
-          disabled={isDisabledOffer}
-        >
-          Offer SOL
-        </button>
+        <div className='w-full text-center'>
+          <button
+            className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
+            hidden={isHiddenOffer}
+            onClick={clickOfferSol}
+            disabled={isDisabledOffer}
+          >
+            Offer SOL
+          </button>
+        </div>
         <input
           type='number'
           className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
@@ -349,7 +351,7 @@ export const DealWindow = ({
         </button>
         {/* <h1>×</h1> */}
       </div>
-      <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
+      <div className='w-full text-center container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
         {secondOfDeal && secondOfDeal.mint && (
           <div onClick={() => setSecondOfDeal({ key: 0 })}>
             <NFTCard
@@ -359,14 +361,16 @@ export const DealWindow = ({
             />
           </div>
         )}
-        <button
-          className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
-          hidden={isHiddenRequest}
-          onClick={clickRequestSol}
-          disabled={isDisabledRequest}
-        >
-          Request SOL
-        </button>
+        <div className='w-full text-center'>
+          <button
+            className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8'
+            hidden={isHiddenRequest}
+            onClick={clickRequestSol}
+            disabled={isDisabledRequest}
+          >
+            Request SOL
+          </button>
+        </div>
         <input
           type='number'
           className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
@@ -384,31 +388,33 @@ export const DealWindow = ({
           ×
         </button>
       </div>
-      <button
-        className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-4 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8 text-2xl w-1/2 disabled:opacity-50'
-        disabled={
-          !(
-            firstOfDeal &&
-            firstOfDeal.mint &&
-            secondOfDeal &&
-            secondOfDeal.mint
-          )
-        }
-        onClick={() => {
-          // console.log(
-          //   firstOfDeal,
-          //   secondOfDeal,
-          //   Number(valueOffer),
-          //   Number(valueRequest),
-          //   takerAddress
-          // )
-          initialize_escrow()
-          // console.log('here is current focusing point: ', program)
-          // initialize({ program, valueOffer, valueRequest })
-        }}
-      >
-        Confirm Swap
-      </button>
+      <div className='w-full text-center'>
+        <button
+          className=' bg-pink-500 hover:bg-pink-700 text-white font-bold py-4 px-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed m-8 text-2xl w-1/2 disabled:opacity-50'
+          disabled={
+            !(
+              firstOfDeal &&
+              firstOfDeal.mint &&
+              secondOfDeal &&
+              secondOfDeal.mint
+            )
+          }
+          onClick={() => {
+            // console.log(
+            //   firstOfDeal,
+            //   secondOfDeal,
+            //   Number(valueOffer),
+            //   Number(valueRequest),
+            //   takerAddress
+            // )
+            initialize_escrow()
+            // console.log('here is current focusing point: ', program)
+            // initialize({ program, valueOffer, valueRequest })
+          }}
+        >
+          Confirm Swap
+        </button>
+      </div>
     </div>
   )
 }

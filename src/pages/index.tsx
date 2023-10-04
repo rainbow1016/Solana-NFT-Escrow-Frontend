@@ -32,26 +32,34 @@ const Index: NextPage = () => {
   // console.log('hasodihfa', formatRpc)
   return (
     <Layout formatRpc={'formatRpc'}>
-      <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
-        <Main
-          refresh={refresh}
-          setFirstOfDeal={setFirstOfDeal}
-          setSecondOfDeal={setSecondOfDeal}
-          setTakerAddress={setTakerAddress}
-        />
-      </div>
-      {/* <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'> */}
-      <div>
-        <DealWindow
-          handleRefresh={() => {
-            setTimeout(() => handleRefresh((e: any) => !e), 3000)
-          }}
-          firstOfDeal={firstOfDeal}
-          setFirstOfDeal={setFirstOfDeal}
-          secondOfDeal={secondOfDeal}
-          setSecondOfDeal={setSecondOfDeal}
-          takerAddress={takerAddress}
-        />
+      <div className='flex flex-row gap-[20px] p-[20px]'>
+        <div
+          className='overflow-y-auto overflow-x-hidden container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500 w-[70%]'
+          style={{ height: 'calc(100vh - 166px)' }}
+        >
+          <Main
+            refresh={refresh}
+            setFirstOfDeal={setFirstOfDeal}
+            setSecondOfDeal={setSecondOfDeal}
+            setTakerAddress={setTakerAddress}
+          />
+        </div>
+        {/* <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'> */}
+        <div
+          className='overflow-y-auto w-[30%]'
+          style={{ height: 'calc(100vh - 166px)' }}
+        >
+          <DealWindow
+            handleRefresh={() => {
+              setTimeout(() => handleRefresh((e: any) => !e), 3000)
+            }}
+            firstOfDeal={firstOfDeal}
+            setFirstOfDeal={setFirstOfDeal}
+            secondOfDeal={secondOfDeal}
+            setSecondOfDeal={setSecondOfDeal}
+            takerAddress={takerAddress}
+          />
+        </div>
       </div>
     </Layout>
     // <div>aosiejfoaewjf</div>

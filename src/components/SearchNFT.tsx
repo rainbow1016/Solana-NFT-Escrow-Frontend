@@ -62,7 +62,7 @@ export const SearchNFT = ({ callback }) => {
                   name='seller-address'
                   id='seller-address'
                   placeholder='Input wallet address'
-                  className='focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm  sm:text-sm border-gray-300 rounded-md h-9'
+                  className='focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm  sm:text-sm border border-gray-300 rounded-md h-9 '
                   onChange={handleChangeSellerAddress}
                   value={sellerAddress}
                 />
