@@ -256,7 +256,7 @@ export const Main = ({
       const signedTx = await signTransaction(tx)
       const txId = await connection.sendRawTransaction(signedTx.serialize())
       await connection.confirmTransaction(txId)
-      toast('Canceled successfully!')
+      toast('Exchanged successfully!')
 
       await axios({
         method: 'post',
