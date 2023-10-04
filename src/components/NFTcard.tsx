@@ -50,7 +50,8 @@ export const NFTCard = ({ metadata, sellerAddress }: NFTCardProps) => {
             </p>
             <a
               target='_blank'
-              href={`https://solana.nftscan.com/${metadata.mint}`}
+              // href={`https://solana.nftscan.com/${metadata.mint}`}
+              href={`https://explorer.solana.com/address/${metadata.mint}?cluster=devnet`}
               rel='noopener noreferrer'
             >
               <h3 className='font-mono font-light text-pink-500 border-x-2 border-y-2 rounded-md border-pink-500 justify-center mx-[10px] text-center'>
