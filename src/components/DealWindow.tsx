@@ -13,6 +13,7 @@ import {
   Keypair,
   LAMPORTS_PER_SOL
 } from '@solana/web3.js'
+import { VscError } from 'react-icons/vsc'
 
 import { customized_rpc, backend_url } from '../utils/const'
 import { IDL } from '../web3/nft_trading/anchor_escrow'
@@ -333,22 +334,24 @@ export const DealWindow = ({
             Offer SOL
           </button>
         </div>
-        <input
-          type='number'
-          className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
-          id='offer_sol'
-          placeholder='SOL'
-          hidden={!isHiddenOffer}
-          onChange={handleChangeOffer}
-          value={valueOffer}
-        />
-        <button
-          className='m-8 mt-0 text-indigo-500 text-4xl font-bold'
-          hidden={!isHiddenOffer}
-          onClick={clickOfferSolInput}
-        >
-          ×
-        </button>
+        <div className='flex justify-center'>
+          <input
+            type='number'
+            className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
+            id='offer_sol'
+            placeholder='SOL'
+            hidden={!isHiddenOffer}
+            onChange={handleChangeOffer}
+            value={valueOffer}
+          />
+          <button
+            className='m-8 text-indigo-500 text-4xl font-bold'
+            hidden={!isHiddenOffer}
+            onClick={clickOfferSolInput}
+          >
+            <VscError />
+          </button>
+        </div>
         {/* <h1>×</h1> */}
       </div>
       <div className='w-full text-center container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'>
@@ -371,22 +374,24 @@ export const DealWindow = ({
             Request SOL
           </button>
         </div>
-        <input
-          type='number'
-          className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
-          id='request_sol'
-          placeholder='SOL'
-          hidden={!isHiddenRequest}
-          onChange={handleChangeRequest}
-          value={valueRequest}
-        />
-        <button
-          className='m-8 mt-0 text-indigo-500 text-4xl font-bold'
-          hidden={!isHiddenRequest}
-          onClick={clickRequestSolInput}
-        >
-          ×
-        </button>
+        <div className='flex justify-center'>
+          <input
+            type='number'
+            className='border-x-2 border-y-2 rounded-full border-indigo-500 font-bold text-indigo-500 py-2 px-4 m-8'
+            id='request_sol'
+            placeholder='SOL'
+            hidden={!isHiddenRequest}
+            onChange={handleChangeRequest}
+            value={valueRequest}
+          />
+          <button
+            className='m-8 text-indigo-500 text-4xl font-bold'
+            hidden={!isHiddenRequest}
+            onClick={clickRequestSolInput}
+          >
+            <VscError />
+          </button>
+        </div>
       </div>
       <div className='w-full text-center'>
         <button

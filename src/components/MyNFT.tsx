@@ -1,8 +1,9 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useMetadata } from '../hooks/useMetadata'
 import { NFTCard } from './NFTcard'
 import { Connection, clusterApiUrl } from '@solana/web3.js'
+import { VscRefresh } from 'react-icons/vsc'
 
 import Moralis from 'moralis'
 import { SolNetwork } from '@moralisweb3/common-sol-utils'
@@ -12,6 +13,7 @@ export const MyNFT = ({ callback, refresh }) => {
   const { connection } = useConnection()
   const new_connection = new Connection(customized_rpc)
   const [metadataList, fetchMetadata] = useMetadata()
+  const [refresh1, setRefresh1] = useState<boolean>(true)
   // console.log(useWallet())
   const publicKey = useWallet().publicKey
 
@@ -34,7 +36,7 @@ export const MyNFT = ({ callback, refresh }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [publicKey, refresh])
+  }, [publicKey, refresh, refresh1])
 
   const generateMessage = () => {
     if (!publicKey) {
@@ -48,8 +50,12 @@ export const MyNFT = ({ callback, refresh }) => {
   return (
     <div className='mt-10 sm:mt-0'>
       <div className='p-4 sm:px-0'>
-        <h3 className='text-lg font-medium leading-6 text-gray-900'>
-          My Collections
+        <h3 className='text-lg font-medium leading-6 text-gray-900 flex flex-row '>
+          My Collections &nbsp;&nbsp;&nbsp;&nbsp;{' '}
+          <VscRefresh
+            className='w-[24px] h-[24px]'
+            onClick={() => setRefresh1((e: boolean) => !e)}
+          />
         </h3>
       </div>
       <div className='sm:grid sm:grid-cols-3 gap-4'>
