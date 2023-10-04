@@ -22,7 +22,7 @@ export const Layout = ({
           {/* </a> */}
         </Link>
         <div className='font-mono text-xs text-gray-600 px-3'>
-          Solana NFT Platform
+          Solana NFT Exchange Platform
         </div>
       </div>
       <div className='flex flex-row items-center'>

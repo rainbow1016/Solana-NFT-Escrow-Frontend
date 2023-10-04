@@ -3,71 +3,66 @@ import {
   Dispatch,
   ReactNode,
   useContext,
-  useReducer,
-} from "react";
+  useReducer
+} from 'react'
 
 export enum ModalUserAction {
   CancelOffer,
-  AcceptOffer,
+  AcceptOffer
 }
 
 export type ActionProps =
   | {
-      type: ModalUserAction.CancelOffer;
-      id: string;
-      escrowAddress: string;
-      nftAddress: string;
+      type: ModalUserAction.CancelOffer
+      data: Object
     }
   | {
-      type: ModalUserAction.AcceptOffer;
-      id: string;
-      amount: number;
-      escrowAddress: string;
-      nftAddress: string;
-    };
+      type: ModalUserAction.AcceptOffer
+      data: Object
+    }
 type Content = {
-  buttonName: string;
-  message: string;
-  props: ActionProps;
-  title: string;
-};
-type State = { content?: Content | undefined; show: boolean } | undefined;
-type Action = { type: "SHOW_DIALOG"; input: Content } | { type: "HIDE_DIALOG" };
+  buttonName: string
+  message: string
+  props: ActionProps
+  title: string
+}
+type State = { content?: Content | undefined; show: boolean } | undefined
+type Action = { type: 'SHOW_DIALOG'; input: Content } | { type: 'HIDE_DIALOG' }
 
-const ModalStateContext = createContext<State>(undefined);
+const ModalStateContext = createContext<State>(undefined)
 const ModalDispatchContext = createContext<Dispatch<Action> | undefined>(
   undefined
-);
+)
 
 const modalReducer = (state: State, action: Action): State => {
   switch (action?.type) {
-    case "SHOW_DIALOG":
+    case 'SHOW_DIALOG':
       const content: Content = {
-        ...action.input,
-      };
+        ...action.input
+      }
       return {
         content,
-        show: true,
-      };
-    case "HIDE_DIALOG":
+        show: true
+      }
+    case 'HIDE_DIALOG':
       return {
         content: undefined,
-        show: false,
-      };
+        show: false
+      }
     default:
       return {
         ...state,
-        show: false,
-      };
+        show: false
+      }
   }
-};
+}
 
 const initialState = {
-  show: false,
-};
+  show: false
+}
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(modalReducer, initialState);
+  const [state, dispatch] = useReducer(modalReducer, initialState)
 
   return (
     <ModalStateContext.Provider value={state}>
@@ -75,22 +70,22 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         {children}
       </ModalDispatchContext.Provider>
     </ModalStateContext.Provider>
-  );
-};
+  )
+}
 
 export const useModalState = () => {
-  const state = useContext(ModalStateContext);
+  const state = useContext(ModalStateContext)
   if (state === undefined) {
-    throw new Error("useModalState should be used with ModalProvider");
+    throw new Error('useModalState should be used with ModalProvider')
   }
-  return state;
-};
+  return state
+}
 
 export const useModalDispatch = () => {
-  const dispatch = useContext(ModalDispatchContext);
+  const dispatch = useContext(ModalDispatchContext)
 
   if (dispatch === undefined) {
-    throw new Error("useModalDispatch should be used with ModalProvider");
+    throw new Error('useModalDispatch should be used with ModalProvider')
   }
-  return dispatch;
-};
+  return dispatch
+}

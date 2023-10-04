@@ -6,6 +6,7 @@ import { useLoadingDispatch } from '../contexts/LoadingContext'
 import { TransactionType } from '../types'
 import { NFTCard } from './NFTcard'
 import * as anchor from '@coral-xyz/anchor'
+import axios from 'axios'
 import {
   Connection,
   PublicKey,
@@ -13,12 +14,12 @@ import {
   LAMPORTS_PER_SOL
 } from '@solana/web3.js'
 
-import { initialize } from '../web3/nft_trading/initialize'
-import { customized_rpc } from '../utils/const'
+import { customized_rpc, backend_url } from '../utils/const'
 import { IDL } from '../web3/nft_trading/anchor_escrow'
 import {
   TOKEN_PROGRAM_ID,
-  ASSOCIATED_TOKEN_PROGRAM_ID
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  getAssociatedTokenAddress
 } from '@solana/spl-token'
 import { PassThrough } from 'stream'
 import { getOrCreateAssociatedTokenAccount } from '../web3/nft_trading/utils/getOrCreateAssociatedTokenAccount'
@@ -134,9 +135,11 @@ export const DealWindow = ({
       )
     const initializerTokenAccountA = initializerTokenAccountA_info.address
 
-    const randomSeed: anchor.BN = new anchor.BN(
-      Math.floor(Math.random() * 100000000)
-    )
+    const takerTokenAccountA = await getAssociatedTokenAddress(mintA, takerKey)
+    const takerTokenAccountB = await getAssociatedTokenAddress(mintB, takerKey)
+
+    const randomSeed_num = Math.floor(Math.random() * 100000000)
+    const randomSeed: anchor.BN = new anchor.BN(randomSeed_num)
     const initializerAmount = new anchor.BN(
       Number(valueOffer) * LAMPORTS_PER_SOL
     )
@@ -171,7 +174,9 @@ export const DealWindow = ({
 
     // console.log(
     //   initializerTokenAccountA.toBase58(),
-    //   initializerTokenAccountB.toBase58()
+    //   initializerTokenAccountB.toBase58(),
+    //   takerTokenAccountA.toBase58(),
+    //   takerTokenAccountB.toBase58()
     // )
 
     try {
@@ -205,6 +210,26 @@ export const DealWindow = ({
       const txId = await connection.sendRawTransaction(signedTx.serialize())
       await connection.confirmTransaction(txId)
       toast('Sent trading request successfully!')
+
+      await axios({
+        method: 'post',
+        url: `${backend_url}/initialize`,
+        data: {
+          random_seed: randomSeed_num,
+          initializer: initializer,
+          taker: takerKey,
+          initializer_mint: mintA,
+          taker_mint: mintB,
+          initializerDepositTokenAccount: initializerTokenAccountA,
+          initializerReceiveTokenAccount: initializerTokenAccountB,
+          takerDepositTokenAccount: takerTokenAccountB,
+          takerReceiveTokenAccount: takerTokenAccountA,
+          initializer_amount: valueOffer,
+          taker_amount: valueRequest
+        }
+      }).then(res => {
+        toast('Saved in Database successfully!')
+      })
     } catch (error) {
       console.log(error)
       toast('Action failed. Please retry')

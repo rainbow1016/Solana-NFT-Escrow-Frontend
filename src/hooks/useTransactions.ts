@@ -1,10 +1,6 @@
-import { useState } from "react";
-import {
-  TxHistory,
-  GetTxHistoryByBuyerAddressQuery,
-  GetTxHistoryBySellerAddressQuery,
-  ModelSortDirection,
-} from "../API";
+import { useState, useCallback } from "react";
+import axios from "axios";
+import { backend_url, TxHistory } from "../utils/const";
 
 import { TransactionType } from "../types";
 
@@ -12,44 +8,49 @@ export const useTransactions = (
   type: TransactionType
 ): [TxHistory[] | null, (address: string) => Promise<void>] => {
   const [transactions, setTransactions] = useState<TxHistory[] | null>(null);
-  async function fetchBuyerTransactions(address: string) {
+
+  const fetchBuyerTransactions = useCallback(async (address: string) => {
     try {
-      // if (address) {
-      //   const response = (await API.graphql(
-      //     graphqlOperation(getTxHistoryByBuyerAddress, {
-      //       buyerAddress: address,
-      //       sortDirection: ModelSortDirection.DESC,
-      //     })
-      //   )) as { data: GetTxHistoryByBuyerAddressQuery };
-      //   const items = (response.data.getTxHistoryByBuyerAddress?.items ||
-      //     []) as TxHistory[];
-      //   if (items.length !== 0) {
-      //     setTransactions(items);
-      //   }
-      // }
+      if (address) {
+        await axios({
+          method: "post",
+          url: `${backend_url}/offer`,
+          data: {
+            initializer: address,
+          },
+        }).then((res) => {
+          const items = res.data as TxHistory[];
+          if (items.length !== 0) {
+            setTransactions(items);
+          }
+        });
+      }
     } catch (err) {
-      console.log("error fetching buyer tx", err);
+      console.log("error fetching offer transactions", err);
     }
-  }
-  async function fetchSellerTransactions(address: string) {
+  }, []);
+
+  const fetchSellerTransactions = useCallback(async (address: string) => {
     try {
-      // if (address) {
-      //   const response = (await API.graphql(
-      //     graphqlOperation(getTxHistoryBySellerAddress, {
-      //       sellerAddress: address,
-      //       sortDirection: ModelSortDirection.DESC,
-      //     })
-      //   )) as { data: GetTxHistoryBySellerAddressQuery };
-      //   const items = (response.data.getTxHistoryBySellerAddress?.items ||
-      //     []) as TxHistory[];
-      //   if (items.length !== 0) {
-      //     setTransactions(items);
-      //   }
-      // }
+      if (address) {
+        await axios({
+          method: "post",
+          url: `${backend_url}/request`,
+          data: {
+            initializer: address,
+          },
+        }).then((res) => {
+          const items = res.data as TxHistory[];
+          if (items.length !== 0) {
+            setTransactions(items);
+          }
+        });
+      }
     } catch (err) {
-      console.log("error fetching seller tx", err);
+      console.log("error fetching offer transactions", err);
     }
-  }
+  }, []);
+
   switch (type) {
     case TransactionType.Buyer:
       return [transactions, fetchBuyerTransactions];

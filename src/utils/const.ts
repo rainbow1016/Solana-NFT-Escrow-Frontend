@@ -1,6 +1,6 @@
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
-  Token,
+  // Token,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
@@ -9,6 +9,20 @@ import BN from "bn.js";
 import * as anchor from "@project-serum/anchor";
 
 export type Cluster = "devnet" | "testnet" | "mainnet";
+
+export type TxHistory = {
+  random_seed: string;
+  initializer: string;
+  taker: string;
+  initializer_mint: string;
+  taker_mint: string;
+  initializerDepositTokenAccount: string;
+  initializerReceiveTokenAccount: string;
+  takerDepositTokenAccount: string;
+  takerReceiveTokenAccount: string;
+  initializer_amount: string;
+  taker_amount: string;
+};
 
 export const CLUSTER: Cluster =
   // eslint-disable-next-line no-nested-ternary
@@ -25,60 +39,60 @@ export const SOLANA_HOST = process.env.REACT_APP_SOLANA_API_URL
   ? clusterApiUrl("mainnet-beta")
   : clusterApiUrl("devnet");
 
-export const getAssociatedTokenAddress = async (
-  mintKey: PublicKey | string,
-  ownerKey: PublicKey | string
-): Promise<PublicKey> =>
-  Token.getAssociatedTokenAddress(
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-    TOKEN_PROGRAM_ID,
-    toPublicKey(mintKey),
-    toPublicKey(ownerKey)
-  );
+// export const getAssociatedTokenAddress = async (
+//   mintKey: PublicKey | string,
+//   ownerKey: PublicKey | string
+// ): Promise<PublicKey> =>
+//   Token.getAssociatedTokenAddress(
+//     ASSOCIATED_TOKEN_PROGRAM_ID,
+//     TOKEN_PROGRAM_ID,
+//     toPublicKey(mintKey),
+//     toPublicKey(ownerKey)
+//   );
 
-export const hasNft = async (
-  solanaConnection: Connection,
-  walletAccount: string | PublicKey,
-  nftAddress: string | PublicKey,
-  tokenAccount: null | string | PublicKey
-) => {
-  if (!solanaConnection) {
-    return false;
-  }
+// export const hasNft = async (
+//   solanaConnection: Connection,
+//   walletAccount: string | PublicKey,
+//   nftAddress: string | PublicKey,
+//   tokenAccount: null | string | PublicKey
+// ) => {
+//   if (!solanaConnection) {
+//     return false;
+//   }
 
-  const associatedKey = await getAssociatedTokenAddress(
-    toPublicKey(nftAddress),
-    toPublicKey(walletAccount)
-  );
-  ConsoleHelper(
-    `isEnoughNft -> associatedKey: ${pubkeyToString(associatedKey)}`
-  );
+// const associatedKey = await getAssociatedTokenAddress(
+//   toPublicKey(nftAddress),
+//   toPublicKey(walletAccount)
+// );
+// ConsoleHelper(
+//   `isEnoughNft -> associatedKey: ${pubkeyToString(associatedKey)}`
+// );
 
-  try {
-    const nftAmount = await getTokenBalance(solanaConnection, associatedKey);
-    if (nftAmount.eq(new BN(1))) {
-      return true;
-    }
-  } catch (e) {
-    ConsoleHelper(`isEnoughNftOnSolana: ${e}`);
-  }
-  if (!tokenAccount) {
-    return false;
-  }
-  try {
-    const nftAmount = await getTokenBalance(
-      solanaConnection,
-      toPublicKey(tokenAccount)
-    );
-    if (nftAmount.eq(new BN(1))) {
-      return true;
-    }
-  } catch (e) {
-    ConsoleHelper(`isEnoughNftOnSolana: ${e}`);
-  }
+//   try {
+//     const nftAmount = await getTokenBalance(solanaConnection, associatedKey);
+//     if (nftAmount.eq(new BN(1))) {
+//       return true;
+//     }
+//   } catch (e) {
+//     ConsoleHelper(`isEnoughNftOnSolana: ${e}`);
+//   }
+//   if (!tokenAccount) {
+//     return false;
+//   }
+//   try {
+//     const nftAmount = await getTokenBalance(
+//       solanaConnection,
+//       toPublicKey(tokenAccount)
+//     );
+//     if (nftAmount.eq(new BN(1))) {
+//       return true;
+//     }
+//   } catch (e) {
+//     ConsoleHelper(`isEnoughNftOnSolana: ${e}`);
+//   }
 
-  return false;
-};
+//   return false;
+// };
 
 export const getTokenBalance = async (
   connection: Connection,
@@ -96,3 +110,5 @@ export const pubkeyToString = (key: PublicKey | null | string = ``) =>
 
 export const customized_rpc =
   "https://rough-neat-research.solana-devnet.discover.quiknode.pro/67ffb9949cc02e1656eb0761af5b5cd150e7f049/";
+
+export const backend_url = "http://localhost:5050/api";

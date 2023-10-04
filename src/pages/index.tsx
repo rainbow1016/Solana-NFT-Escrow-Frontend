@@ -43,7 +43,9 @@ const Index: NextPage = () => {
       {/* <div className='container mx-auto justify-center mt-6 border-x-2 border-y-2 border-spacing-x-5 border-spacing-y-5 px-5 py-5 rounded-md border-pink-500'> */}
       <div>
         <DealWindow
-          handleRefresh={() => handleRefresh((e: any) => !e)}
+          handleRefresh={() => {
+            setTimeout(() => handleRefresh((e: any) => !e), 3000)
+          }}
           firstOfDeal={firstOfDeal}
           setFirstOfDeal={setFirstOfDeal}
           secondOfDeal={secondOfDeal}
